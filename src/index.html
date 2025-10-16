@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day Journal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>📖 Day Journal</h1>
+            <div class="date-display" id="currentDate"></div>
+        </header>
+
+        <main class="main-content">
+            <!-- Welcome/Status Section -->
+            <div class="status-section" id="statusSection">
+                <div class="status-card" id="statusCard">
+                    <div class="status-icon" id="statusIcon">📝</div>
+                    <div class="status-text">
+                        <h2 id="statusTitle">Ready to write</h2>
+                        <p id="statusMessage">You can write your daily entry today!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Writing Section -->
+            <div class="writing-section" id="writingSection" style="display: none;">
+                <div class="entry-form">
+                    <h3>Today's Entry</h3>
+                    <textarea 
+                        id="entryText" 
+                        placeholder="Write about your day..."
+                        rows="10"
+                    ></textarea>
+                    <div class="form-actions">
+                        <button id="saveEntry" class="btn btn-primary">Save Entry</button>
+                        <button id="cancelEntry" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Viewing Section -->
+            <div class="viewing-section" id="viewingSection" style="display: none;">
+                <div class="entry-display">
+                    <div class="entry-header">
+                        <h3>Today's Entry</h3>
+                        <button id="editEntry" class="btn btn-small">Edit</button>
+                    </div>
+                    <div class="entry-content" id="entryContent"></div>
+                    <div class="entry-meta">
+                        <span id="entryTime"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div class="history-section">
+                <h3>Recent Entries</h3>
+                <div class="history-list" id="historyList">
+                    <!-- History entries will be populated here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button id="newEntryBtn" class="btn btn-primary btn-large">
+                <span class="btn-icon">✍️</span>
+                New Entry
+            </button>
+            <button id="viewHistoryBtn" class="btn btn-secondary">
+                <span class="btn-icon">📚</span>
+                View History
+            </button>
+        </div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
+
