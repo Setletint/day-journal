@@ -89,3 +89,14 @@ ipcMain.handle('get-today-entry', () => {
   const entries = store.get('journalEntries', []);
   return entries.find(entry => entry.date === today);
 });
+
+ipcMain.handle('update-journal-entry', (event, updatedEntry) => {
+  const entries = store.get('journalEntries', []);
+  const index = entries.findIndex(entry => entry.date === updatedEntry.date);
+  if (index !== -1) {
+    entries[index] = updatedEntry;
+    store.set('journalEntries', entries);
+    return true;
+  }
+  return false;
+});
