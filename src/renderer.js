@@ -126,6 +126,7 @@ class DayJournal {
         const viewingSection = document.getElementById('viewingSection');
         const entryContent = document.getElementById('entryContent');
         const entryTime = document.getElementById('entryTime');
+        const entryHeader = viewingSection.querySelector('h3');
 
         statusSection.style.display = 'none';
         viewingSection.style.display = 'block';
@@ -133,6 +134,21 @@ class DayJournal {
         entryContent.textContent = entry.content;
         
         const entryDate = new Date(entry.timestamp);
+        const today = new Date();
+        const isToday = entryDate.toDateString() === today.toDateString();
+        
+        // Update header based on whether it's today's entry or an older one
+        if (isToday) {
+            entryHeader.textContent = "Today's Entry";
+        } else {
+            entryHeader.textContent = `Entry from ${entryDate.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            })}`;
+        }
+        
         entryTime.textContent = `Written on ${entryDate.toLocaleDateString()} at ${entryDate.toLocaleTimeString()}`;
     }
 
@@ -140,9 +156,13 @@ class DayJournal {
         const statusSection = document.getElementById('statusSection');
         const writingSection = document.getElementById('writingSection');
         const entryText = document.getElementById('entryText');
+        const entryHeader = writingSection.querySelector('h3');
 
         statusSection.style.display = 'none';
         writingSection.style.display = 'block';
+        
+        // Set header for new entry (always today)
+        entryHeader.textContent = "Today's Entry";
         
         entryText.value = '';
         entryText.focus();
@@ -190,9 +210,34 @@ class DayJournal {
         const writingSection = document.getElementById('writingSection');
         const entryText = document.getElementById('entryText');
         const entryContent = document.getElementById('entryContent');
+        const entryHeader = writingSection.querySelector('h3');
+        const entryTime = document.getElementById('entryTime');
 
         viewingSection.style.display = 'none';
         writingSection.style.display = 'block';
+        
+        // Get the entry date from the entry time element
+        const timeText = entryTime.textContent;
+        const dateMatch = timeText.match(/Written on (.+?) at/);
+        if (dateMatch) {
+            const entryDate = new Date(dateMatch[1]);
+            const today = new Date();
+            const isToday = entryDate.toDateString() === today.toDateString();
+            
+            if (isToday) {
+                entryHeader.textContent = "Today's Entry";
+            } else {
+                entryHeader.textContent = `Editing Entry from ${entryDate.toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                })}`;
+            }
+        } else {
+            // Fallback to today's entry if we can't parse the date
+            entryHeader.textContent = "Today's Entry";
+        }
         
         entryText.value = entryContent.textContent;
         entryText.focus();
