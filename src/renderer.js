@@ -24,7 +24,6 @@ class DayJournal {
         document.getElementById('saveEntry').addEventListener('click', () => this.saveEntry());
         document.getElementById('cancelEntry').addEventListener('click', () => this.cancelEntry());
         document.getElementById('editEntry').addEventListener('click', () => this.editEntry());
-        document.getElementById('viewHistoryBtn').addEventListener('click', () => this.toggleHistory());
 
         // Auto-save functionality (optional)
         document.getElementById('entryText').addEventListener('input', () => {
@@ -92,6 +91,7 @@ class DayJournal {
             // User has already written today
             this.showViewingMode(todayEntry);
             newEntryBtn.style.display = 'none';
+            statusSection.style.display = 'none'; // Hide status when viewing today's entry
             this.updateStatusCard('completed', 'Entry Complete', 'You\'ve already written your entry for today!');
         } else if (canWrite) {
             // User can write today
@@ -100,7 +100,14 @@ class DayJournal {
             this.updateStatusCard('write', 'Ready to Write', 'You can write your daily entry today!');
         } else {
             // Error state
+            statusSection.style.display = 'block';
             this.updateStatusCard('error', 'Error', 'Unable to determine if you can write today');
+        }
+        
+        // Always show history section
+        const historySection = document.querySelector('.history-section');
+        if (historySection) {
+            historySection.style.display = 'block';
         }
     }
 
@@ -241,13 +248,18 @@ class DayJournal {
     cancelEntry() {
         const statusSection = document.getElementById('statusSection');
         const writingSection = document.getElementById('writingSection');
+        const viewingSection = document.getElementById('viewingSection');
 
         // Reset edit mode
         this.isEditMode = false;
         this.editingEntryDate = null;
 
         writingSection.style.display = 'none';
+        viewingSection.style.display = 'none';
         statusSection.style.display = 'block';
+        
+        // Refresh the status display to show correct state
+        this.checkTodayStatus();
     }
 
     editEntry() {
@@ -324,11 +336,6 @@ class DayJournal {
         }
     }
 
-    toggleHistory() {
-        const historySection = document.querySelector('.history-section');
-        const isVisible = historySection.style.display !== 'none';
-        historySection.style.display = isVisible ? 'none' : 'block';
-    }
 
     autoSave() {
         // Optional: Implement auto-save functionality

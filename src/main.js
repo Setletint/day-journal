@@ -67,7 +67,18 @@ ipcMain.handle('get-journal-entries', () => {
 
 ipcMain.handle('save-journal-entry', (event, entry) => {
   const entries = store.get('journalEntries', []);
-  entries.push(entry);
+  
+  // Check if an entry already exists for this date
+  const existingEntryIndex = entries.findIndex(existingEntry => existingEntry.date === entry.date);
+  
+  if (existingEntryIndex !== -1) {
+    // Update existing entry instead of creating duplicate
+    entries[existingEntryIndex] = entry;
+  } else {
+    // Add new entry
+    entries.push(entry);
+  }
+  
   store.set('journalEntries', entries);
   return true;
 });
