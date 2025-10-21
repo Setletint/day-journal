@@ -295,21 +295,23 @@ body {
 
 /* Action buttons */
 .action-buttons {
-    position: fixed;
+    position: fixed !important;
     bottom: 2rem;
     right: 2rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    z-index: 1000;
+    z-index: 9999;
     transition: all 0.3s ease;
 }
 
 /* Responsive action buttons */
 @media (max-width: 1024px) {
     .action-buttons {
+        position: fixed !important;
         bottom: 1rem;
         right: 1rem;
+        z-index: 9999;
     }
 }
 
@@ -367,11 +369,12 @@ body {
     }
     
     .action-buttons {
-        position: static;
-        margin-top: 2rem;
-        flex-direction: row;
-        justify-content: center;
+        position: fixed !important;
+        bottom: 1rem;
+        right: 1rem;
+        flex-direction: column;
         gap: 1rem;
+        z-index: 9999;
     }
     
     .btn-large {
