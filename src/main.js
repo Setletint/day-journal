@@ -17,6 +17,7 @@ function createWindow() {
     resizable: true,
     maximizable: true,
     minimizable: true,
+    autoHideMenuBar: true, // Hide the menu bar
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
