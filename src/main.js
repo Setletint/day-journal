@@ -7,6 +7,8 @@ const store = new Store();
 
 let mainWindow;
 
+
+// TODO: Disable window menu
 function createWindow() {
   // Create the browser window
   mainWindow = new BrowserWindow({
